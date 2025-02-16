@@ -33,8 +33,12 @@ int main()
         Node *p = new Node((unsigned char)i, freq[i]);
         tree.push_back(p);
     }
-    // cout << tree.size(); // 22
-
-
+    
+    // создаем дерево
+    makeTree(tree);
+    // бля я ебал:
+    // 1. Пофиксил
+    // 2. В makeTree два pop_front надо заменить на erase  (в общем и целом необходимо удалять два первых элемента), но я хз как, оно не работает в закомментированной строке 
+    // 3. Ну и надо понять что хранить в private а что в public
     return 0;
 }
