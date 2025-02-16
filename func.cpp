@@ -8,8 +8,8 @@ Node::Node(){
 
 }
 
-Node::Node(char symbol, unsigned int count)
+Node::Node(unsigned char symbol, unsigned int count)
 {
-    symb = (unsigned char)symbol;
+    symb = symbol;
     freq = count;
 }

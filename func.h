@@ -9,7 +9,7 @@ class Node {
 	    unsigned int freq;
 
         Node();
-        Node(char symbol, unsigned int count);
+        Node(unsigned char symbol, unsigned int count);
     private:
         Node *left;
         Node *right;

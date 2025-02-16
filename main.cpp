@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "func.h"
+#include "func.cpp"
 #include <string>
 #include <list>
 #define SIZE 256
@@ -27,11 +27,9 @@ int main()
 
 
     list<Node*> tree;
-    char a;
     for(int i = 0; i < SIZE; ++i) {
         if(freq[i] == 0) continue;
-        a = i;
-        Node *p = new Node(a, freq[i]);
+        Node *p = new Node((unsigned char)i, freq[i]);
         tree.push_back(p);
     }
     cout << tree.size();
