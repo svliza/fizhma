@@ -3,25 +3,25 @@
 #include "func.h"
 #include <string>
 
+#define SIZE 256
+
 using namespace std;
 
 int main()
 {
-    string line;
-    ifstream fs("file.txt", std::ios::binary);
-    if (fs.is_open())
+    ifstream fs("file.txt", ios::binary);
+    if (!fs.is_open())
     {
-        cout << "ok" << endl;
+        return -1;
     }
-    if (fs.is_open())
+    fs.seekg (0, ios::end);
+    long length = fs.tellg();
+    fs.seekg (0, ios::beg);
+    int freq[SIZE]={0};
+    for (int i = 0; i < length; ++i)
     {
-        while (getline(fs, line))
-        {
-            cout << line << endl;
-        }
+        freq[(unsigned char)fs.get()] ++;
     }
-    
     fs.close();
-
     return 0;
 }
