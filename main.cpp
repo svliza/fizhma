@@ -9,6 +9,7 @@ using namespace std;
 
 int main()
 {
+    // считываем символы в массив
     ifstream fs("file.txt", ios::binary);
     if (!fs.is_open())
     {
@@ -25,14 +26,15 @@ int main()
     fs.close();
     
 
-
+    // создаем список с символами
     list<Node*> tree;
     for(int i = 0; i < SIZE; ++i) {
         if(freq[i] == 0) continue;
         Node *p = new Node((unsigned char)i, freq[i]);
         tree.push_back(p);
     }
-    cout << tree.size();
+    // cout << tree.size(); // 22
+
 
     return 0;
 }
