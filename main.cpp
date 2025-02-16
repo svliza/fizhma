@@ -2,7 +2,7 @@
 #include <fstream>
 #include "func.h"
 #include <string>
-
+#include <list>
 #define SIZE 256
 
 using namespace std;
@@ -12,7 +12,7 @@ int main()
     ifstream fs("file.txt", ios::binary);
     if (!fs.is_open())
     {
-        return -1;
+        return -1;  
     }
     fs.seekg (0, ios::end);
     long length = fs.tellg();
@@ -23,5 +23,18 @@ int main()
         freq[(unsigned char)fs.get()] ++;
     }
     fs.close();
+    
+
+
+    list<Node*> tree;
+    char a;
+    for(int i = 0; i < SIZE; ++i) {
+        if(freq[i] == 0) continue;
+        a = i;
+        Node *p = new Node(a, freq[i]);
+        tree.push_back(p);
+    }
+    cout << tree.size();
+
     return 0;
 }
