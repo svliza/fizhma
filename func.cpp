@@ -39,6 +39,7 @@ void makeTree(list<Node*> &myTree)
     }
 }
 
+//Шифрование текста
 void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 {
     if (root == nullptr)

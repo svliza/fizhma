@@ -23,4 +23,4 @@ bool sortTree(const Node *first, const Node *second);
 
 void makeTree(std::list<Node*>& myTree);
 
-void encode(Node* root, std::string str, std::unordered_map<char, std::string>& huffmanCode);
+void encode(Node* root, std::string str, std::unordered_map<unsigned char, std::string>& huffmanCode);

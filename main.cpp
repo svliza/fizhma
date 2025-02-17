@@ -37,27 +37,20 @@ int main()
 
     // Создаем дерево
     makeTree(tree);
-    Node* root=tree.front();
-    cout<<root->symb<<root->freq<<endl;
+    Node root=*tree.front();
 
     // Сжатие файла
     unordered_map<char, string> huffmanCode; //хэш-таблица кодов
-    encode(root, "", huffmanCode);
+    encode(&root, "", huffmanCode);
     string encodeText="";
     for (int i = 0; i < length; ++i)
     {
         unsigned char ch=fs.get();
         encodeText+=huffmanCode[ch];
-        //cout<<i<<" "<<ch<<" "<<huffmanCode[ch]<<" "<<encodeText<<endl;
     }
     cout<<"encoded text: "<<encodeText<<endl;
 
     fs.close();
-    
-    // Освобождение памяти для узлов дерева (очистка)
-    for (Node* node : tree) {
-        delete node;
-    }
 
     return 0;
 }
