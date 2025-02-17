@@ -4,9 +4,9 @@
 
 using namespace std;
 
-// Node::Node():left(nullptr), right(nullptr), next(nullptr){
+Node::Node():left(nullptr), right(nullptr){
 
-// }
+}
 
 Node::Node(unsigned char symbol, unsigned int count): symb(symbol), freq(count)
 {

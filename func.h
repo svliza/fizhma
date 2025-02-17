@@ -9,6 +9,7 @@ class Node {
         unsigned char symb;
 	    unsigned char isSymb;
 	    unsigned int freq;
+        Node();
         Node(unsigned char symbol, unsigned int count);
         Node(Node *leftChild, Node *rightChild);
         void print()const;
