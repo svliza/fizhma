@@ -15,7 +15,7 @@ Node::Node(unsigned char symbol, unsigned int count) : symb(symbol), freq(count)
 Node::Node(Node *leftChild, Node *rightChild) : isSymb(false), left(leftChild), right(rightChild) {
     freq = leftChild->freq + rightChild->freq;
 }
-
+    
 // Вывод символа и количества повторений из ноды
 void Node::print() const {
     cout << symb << " " << freq << endl;

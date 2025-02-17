@@ -10,7 +10,7 @@ public:
     unsigned char symb;       // Символ
     bool isSymb;             // Указывает, является ли узел символом
     unsigned int freq;       // Частота символа
-
+    
     Node();
     Node(unsigned char symbol, unsigned int count);
     Node(Node *leftChild, Node *rightChild);
