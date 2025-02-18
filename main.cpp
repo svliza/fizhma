@@ -37,6 +37,7 @@ int main()
 
     // Создаем дерево
     makeTree(tree);
+    cout << tree.front()->freq;
     Node root=*tree.front();
 
     // Сжатие файла
