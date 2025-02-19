@@ -53,5 +53,15 @@ int main()
 
     fs.close();
 
+
+    int padding = 0;
+    
+    vector<char> charArray = bitsToChars(encodedText, padding);
+    ofstream outputFile("encoded.bin", ios::binary);
+    // Записываем размер исходного файла и закодированные данные
+    outputFile.write(reinterpret_cast<char*>(&length), sizeof(long)); 
+    outputFile.write(charArray.data(), charArray.size());
+
+    outputFile.close();
     return 0;
 }
