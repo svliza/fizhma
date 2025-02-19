@@ -62,6 +62,7 @@ int main()
 
     // Записываем закодированные данные
     outputFile.write(charArray.data(), charArray.size());
+    std::cout<<"Текст закодирован"<<std::endl;
 
     outputFile.close();
     return 0;
