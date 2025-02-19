@@ -3,6 +3,7 @@
 #include "func.cpp"
 #include <string>
 #include <list>
+#include <vector>
 #include <unordered_map>
 #define SIZE 256
 
@@ -55,11 +56,11 @@ int main()
 
 
     int padding = 0;
-    
+    string encodedText = ""; 
     vector<char> charArray = bitsToChars(encodedText, padding);
     ofstream outputFile("encoded.bin", ios::binary);
-    // Записываем размер исходного файла и закодированные данные
-    outputFile.write(reinterpret_cast<char*>(&length), sizeof(long)); 
+
+    // Записываем закодированные данные
     outputFile.write(charArray.data(), charArray.size());
 
     outputFile.close();
