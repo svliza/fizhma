@@ -1,6 +1,8 @@
 #include "func.h"
 #include <iostream>
 #include <list>
+#include <unordered_map>
+#include <string>
 
 using namespace std;
 
@@ -8,39 +10,42 @@ Node::Node():left(nullptr), right(nullptr){
 
 }
 
-Node::Node(unsigned char symbol, unsigned int count): symb(symbol), freq(count)
-{
-    isSymb = true;
-}
+Node::Node(unsigned char symbol, unsigned int count) : symb(symbol), freq(count), isSymb(true), left(nullptr), right(nullptr) {}
 
-Node::Node(Node *leftChild, Node *rightChild):isSymb(0), left(leftChild), right(rightChild)
-{
+Node::Node(Node *leftChild, Node *rightChild) : isSymb(false), left(leftChild), right(rightChild) {
     freq = leftChild->freq + rightChild->freq;
 }
-
-// вывод символа и количества повторений из ноды
-void Node::print()const {
+    
+// Вывод символа и количества повторений из ноды
+void Node::print() const {
     cout << symb << " " << freq << endl;
 }
 
-
-// функция сортировки списка нод
-bool sortTree(const Node *first, const Node *second)
-{
+// Функция сортировки списка нод
+bool sortTree(const Node *first, const Node *second) {
     return first->freq < second->freq;
 }
 
-// вопрос по функции лежит в main
 void makeTree(list<Node*> &myTree)
 {
     while (myTree.size() > 1)
     {
         myTree.sort(sortTree);
         auto iter = myTree.begin();
-        Node *p = new Node(*iter++, *iter);
+        Node *p = new Node(*iter, *++iter);
         myTree.push_back(p);
         myTree.pop_front();
         myTree.pop_front();
     }
-    
+}
+
+//Шифрование текста
+void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
+{
+	if (!root->left && !root->right) {
+		huffmanCode[root->symb] = str;
+        return;
+	}
+	encode(root->left, str + "0", huffmanCode);
+	encode(root->right, str + "1", huffmanCode);
 }
