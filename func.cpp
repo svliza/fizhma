@@ -52,8 +52,13 @@ void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 	encode(root->left, str + "0", huffmanCode);
 	encode(root->right, str + "1", huffmanCode);
 }
+
+
+
+//функция из бит в символы
 vector<char> bitsToChars(string& bitString, int& padding) 
 {
+    padding=0;
     size_t bitStringLength=bitString.length();
     padding=0;
     if (bitStringLength%8!=0) 
@@ -69,6 +74,7 @@ vector<char> bitsToChars(string& bitString, int& padding)
     }
     size_t charCount =bitStringLength/8;
     vector<char> result( charCount );
+
 
     for (size_t i=0; i<charCount; ++i) 
     {
