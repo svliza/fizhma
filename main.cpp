@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "func.cpp"
+#include "func.cpp" 
 #include <string>
 #include <list>
+#include <vector>
 #include <unordered_map>
 #define SIZE 256
 
@@ -25,33 +26,46 @@ int main()
     {
         freq[(unsigned char)fs.get()] ++;
     }
-    fs.seekg(0, ios::beg);
+    
 
     // Создаем список с символами
     list<Node*> tree;
-    for(int i = 0; i < SIZE; ++i) {
-        if(freq[i] == 0) continue;
-        Node *p = new Node((unsigned char)i, freq[i]);
+    for (int i = 0; i < SIZE; ++i) {
+        if (freq[i] == 0) continue;
+        Node* p = new Node((unsigned char)i, freq[i]);
         tree.push_back(p);
     }
 
     // Создаем дерево
     makeTree(tree);
-    cout << tree.front()->freq;
-    Node root=*tree.front();
+    Node root = *tree.front();
 
     // Сжатие файла
     unordered_map<char, string> huffmanCode; //хэш-таблица кодов
     encode(&root, "", huffmanCode);
+    
+    fs.seekg(0, ios::beg); 
     string encodeText="";
     for (int i = 0; i < length; ++i)
     {
         unsigned char ch=fs.get();
         encodeText+=huffmanCode[ch];
     }
-    cout<<"encoded text: "<<encodeText<<endl;
-
     fs.close();
 
+    
+    int padding = 0;
+    vector<char> charArray = bitsToChars(encodeText, padding); 
+    ofstream outputFile("encoded.bin", ios::binary);
+   
+    outputFile.write(reinterpret_cast<char*>(&padding), sizeof(int));
+    outputFile.write(reinterpret_cast<char*>(&length), sizeof(long));
+    // Записываем закодированные данные
+    outputFile.write(charArray.data(), charArray.size());    
+    std::cout<<" text zakodirovan "<<std::endl;
+
+    outputFile.close();
+
     return 0;
+
 }
