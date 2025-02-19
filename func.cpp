@@ -53,7 +53,7 @@ void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 	encode(root->right, str + "1", huffmanCode);
 }
 
-//Функция, которая формирует строки символов из строк бит
+//функция перевода бит в символы
 vector<char> bitsToChars(string& bitString, int& padding) 
 {
     size_t bitStringLength=bitString.length();
@@ -71,6 +71,7 @@ vector<char> bitsToChars(string& bitString, int& padding)
     }
     size_t charCount =bitStringLength/8;
     vector<char> result( charCount );
+
 
     for (size_t i=0; i<charCount; ++i) 
     {

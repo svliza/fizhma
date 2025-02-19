@@ -3,9 +3,10 @@
 #include "func.cpp"
 #include <string>
 #include <list>
+#include <vector>
 #include <unordered_map>
-#include "func.h"
 #define SIZE 256
+
 using namespace std;
 
 int main()
@@ -38,7 +39,6 @@ int main()
     // Создаем дерево
     makeTree(tree);
     cout << tree.front()->freq;
-
     Node root=*tree.front();
 
     // Сжатие файла
@@ -51,29 +51,19 @@ int main()
         encodeText+=huffmanCode[ch];
     }
     cout<<"encoded text: "<<encodeText<<endl;
+
     fs.close();
 
 
-    
-    //Преобразование битовой строки в вектор символов
-    int padding=0;
-    string encodedText = "";
-    vector<char> charArray=bitsToChars(encodedText, padding);
-
-    // Запись результата в файл
+    int padding = 0;
+    string encodedText = ""; 
+    vector<char> charArray = bitsToChars(encodedText, padding);
     ofstream outputFile("encoded.bin", ios::binary);
 
-    // Записываем padding в файл, размер исходного файла и закодированные данные
-    outputFile.write(reinterpret_cast<char*>(&padding), sizeof(int));
-    outputFile.write(reinterpret_cast<char*>(&length), sizeof(long));
+    // Записываем закодированные данные
     outputFile.write(charArray.data(), charArray.size());
-    outputFile.close();
+    std::cout<<" Текст  закодирован "<<std::endl;
 
-     while (!tree.empty()) 
-     {
-            Node* node=tree.front();
-            tree.pop_front();
-            delete node;
-        }
+    outputFile.close();
     return 0;
 }
