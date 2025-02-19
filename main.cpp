@@ -30,15 +30,14 @@ int main()
 
     // Создаем список с символами
     list<Node*> tree;
-    for(int i = 0; i < SIZE; ++i) {
-        if(freq[i] == 0) continue;
-        Node *p = new Node((unsigned char)i, freq[i]);
-        tree.push_back(p);
-    }
+    for (int i = 0; i < SIZE; ++i) {
+    if (freq[i] == 0) continue;
+    Node* p = new Node((unsigned char)i, freq[i]);
+    tree.push_back(p);}
 
     // Создаем дерево
     makeTree(tree);
-    cout << tree.front()->freq;
+    cout << tree.front()->freq<<endl;
     Node root=*tree.front();
 
     // Сжатие файла
@@ -50,7 +49,7 @@ int main()
         unsigned char ch=fs.get();
         encodeText+=huffmanCode[ch];
     }
-    cout<<"encoded text: "<<encodeText<<endl;
+    cout<<" encoded text: "<<encodeText<<endl;
 
     fs.close();
 
@@ -62,6 +61,7 @@ int main()
 
     // Записываем закодированные данные
     outputFile.write(charArray.data(), charArray.size());
+    
     std::cout<<" Текст  закодирован "<<std::endl;
 
     outputFile.close();

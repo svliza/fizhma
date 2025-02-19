@@ -34,13 +34,18 @@ void makeTree(list<Node*> &myTree)
     while (myTree.size() > 1)
     {
         myTree.sort(sortTree);
-        auto iter = myTree.begin();
-        Node *p = new Node(*iter, *++iter);
+        auto iter1 = myTree.begin();
+        Node* left = *iter1;
+        myTree.pop_front();
+        auto iter2 = myTree.begin();
+        Node* right = *iter2;
+        myTree.pop_front();
+        Node *p = new Node(left, right); 
         myTree.push_back(p);
-        myTree.pop_front();
-        myTree.pop_front();
     }
 }
+
+
 
 //Шифрование текста
 void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
