@@ -1,8 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include "func.cpp"
+#include "func.cpp" 
 #include <string>
 #include <list>
+#include <list>
+#include <vector>
+#include <unordered_map>
 #define SIZE 256
 
 using namespace std;
