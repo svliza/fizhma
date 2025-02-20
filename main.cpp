@@ -1,12 +1,11 @@
-#include "func.cpp" 
 #include <iostream>
+#include "func.cpp" 
 #include <fstream>
 #include <string>
 #include <list>
 #include <vector>
 #include <unordered_map>
 #include <bitset>
-#include <sstream> 
 
 #define SIZE 256
 
@@ -57,16 +56,13 @@ int main()
         encodeText+=huffmanCode[ch];
     }
     fs.close();
-    // cout << "Coded string: " << encodeText << endl;
-    
-    long int finalLenght = encodeText.length();
-    cout << finalLenght;
 
+    long int finalLenght = encodeText.size();
+    
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding);
-    
 
-    ofstream outputFile("encoded.txt", ios::out);
+    ofstream outputFile("encoded_cat.bmp", ios::binary);
     if (!outputFile.is_open()) {
         return -1;
     }
@@ -74,11 +70,10 @@ int main()
     for (char c : charArray) {
         outputFile << c;
     }
-    cout << "text zakodirovan" << endl;
     outputFile.close();
 
-    // переводим то что в .bin файле обратно в двоичный код
-    ifstream fnew("encoded.txt", ios::binary);
+    // переводим то, что в .bin файле, обратно в двоичный код
+    ifstream fnew("encoded_cat.bmp", ios::binary);
     if (!fnew.is_open())
     {
         return -1;  
@@ -97,7 +92,8 @@ int main()
 
     // декодирование
     vector<char> decodedText = decoder(&root, againBinary, finalLenght);
-    ofstream decodedFile("new.bmp", ios::binary);
+
+    ofstream decodedFile("new_cat.bmp", ios::binary);
     decodedFile.write(decodedText.data(), decodedText.size()); 
     decodedFile.close();
 
