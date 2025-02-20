@@ -11,6 +11,7 @@
 #include <bitset>
 using namespace std;
 
+
 Node::Node():left(nullptr), right(nullptr) {}
 
 Node::Node(unsigned char symbol, unsigned int count) : symb(symbol), freq(count), isSymb(true), left(nullptr), right(nullptr) {}

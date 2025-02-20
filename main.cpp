@@ -6,6 +6,8 @@
 #include <vector>
 #include <unordered_map>
 #include <bitset>
+#include <time.h>
+#include <cstring>
 
 #define SIZE 256
 
@@ -15,11 +17,12 @@ using namespace std;
 int main()
 {
     // Считываем символы в массив
-    ifstream fs("1mb.txt", ios::binary);
+    ifstream fs("file.txt", ios::binary);
     if (!fs.is_open())  
     {
         return -1;  
     }
+
     fs.seekg(0, ios::end);
     long length = fs.tellg();
     fs.seekg(0, ios::beg);
