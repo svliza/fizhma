@@ -52,7 +52,7 @@ int main()
         encodeText+=huffmanCode[ch];
     }
     fs.close();
-
+    long int finalLenght = encodeText.length(); 
     
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding); 
@@ -66,8 +66,9 @@ int main()
 
     outputFile.close();
 
+
     // переводим то что в .bin файле обратно в двоичный код
-    ifstream fnew("encoded.txt", ios::out);
+    ifstream fnew("encoded.txt", ios::binary);
     if (!fnew.is_open())
     {
         return -1;  
@@ -78,36 +79,24 @@ int main()
     string againBinary = "";
     for (int i = 0; i < encodedLenght; ++i)
     {
-        bitset<8>bina((char)fnew.get());
+        bitset<8>bina(fnew.get());
         againBinary+=bina.to_string<char, char_traits<char>, allocator<char> >();
         
     }
-    cout << againBinary; // строка с двоичным кодом
+    cout << againBinary << endl;
+
     fnew.close();
 
-    vector<char> newstring;
-    Node mainRoot = root;
-    cout << "df" << encodeText.length() << endl;
-    for(int i = 0; i < encodeText.length(); i++) {
-        if(!root.left && !root.right) {
-            newstring.push_back(root.symb);
-            root = mainRoot;
-            continue;
-        }
-        if(encodeText[i] == '0') {
-            // cout << "ityt";
 
-            root = *root.left;
-        }
-        else if(encodeText[i] == '1') {
-            // cout << "imhere";
-            root = *root.right;
-        }
-    }
-    for(int i = 0; i < newstring.size(); i++) {
-        cout << newstring[i];
+
+    vector<char> decodedText = decoder(&root, againBinary, finalLenght);
+    for(int i = 0; i < decodedText.size(); i++) {
+        cout << decodedText[i];
     }
 
+    ofstream decodedFile("new.txt", ios::binary);
+    decodedFile.write(decodedText.data(), decodedText.size()); 
+    decodedFile.close();
     return 0;
 
 }

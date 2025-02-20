@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <bitset>
-
+#include <bitset>
 using namespace std;
 
 Node::Node():left(nullptr), right(nullptr) {}
@@ -43,7 +43,6 @@ void makeTree(list<Node*> &myTree)
         myTree.push_back(p);
     }
 }
-
 
 
 //Шифрование текста
@@ -91,19 +90,20 @@ vector<char> bitsToChars(string& bitString, int& padding)
     return result;
 }
 
-vector<char> decoder(Node *root, string bin) {
+vector<char> decoder(Node *root, string bin, int len) {
     vector<char> newstring;
-    Node* mainRoot = root;
-    for(int i = 0; i < bin.length(); i++) {
+    Node mainRoot = *root;
+    for(int i = 0; i < len; i++) {
         if(!root->left && !root->right) {
             newstring.push_back(root->symb);
-            root = mainRoot;
+            root = &mainRoot;
+            i-=1;
             continue;
         }
-        if(bin[i] = '0') {
+        if(bin[i] == '0') {
             root = root->left;
         }
-        else {
+        if(bin[i] == '1') {
             root = root->right;
         }
     }
