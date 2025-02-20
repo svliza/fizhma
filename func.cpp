@@ -4,12 +4,11 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-
+#include <bitset>
+#include <iostream>
 using namespace std;
 
-Node::Node():left(nullptr), right(nullptr){
-
-}
+Node::Node():left(nullptr), right(nullptr) {}
 
 Node::Node(unsigned char symbol, unsigned int count) : symb(symbol), freq(count), isSymb(true), left(nullptr), right(nullptr) {}
 
@@ -27,8 +26,6 @@ bool sortTree(const Node *first, const Node *second) {
     return first->freq < second->freq;
 }
    
-
-
 void makeTree(list<Node*> &myTree)
 {
     while (myTree.size() > 1)
@@ -37,14 +34,15 @@ void makeTree(list<Node*> &myTree)
         auto iter1 = myTree.begin();
         Node* left = *iter1;
         myTree.pop_front();
+
         auto iter2 = myTree.begin();
         Node* right = *iter2;
         myTree.pop_front();
+        
         Node *p = new Node(left, right); 
         myTree.push_back(p);
     }
 }
-
 
 
 //Шифрование текста
@@ -59,37 +57,58 @@ void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 }
 
 //функция перевода бит в символы
-vector<char> bitsToChars(string& bitString, int& padding) 
-{
-    size_t bitStringLength=bitString.length();
-    padding=0;
-    if (bitStringLength%8!=0) 
-    {
-        padding=8-(bitStringLength%8); 
-        string paddedBitString=bitString;
-        for (int i=0; i<padding; ++i) 
-        {
-            paddedBitString+='0';
+vector<char> bitsToChars(const string& bitString, int& padding) {
+    size_t bitStringLength = bitString.length();
+    padding = 0;
+
+    // Создаем копию строки для добавления padding
+    string paddedBitString = bitString;
+
+    if (bitStringLength % 8 != 0) {
+        padding = 8 - (bitStringLength % 8);
+        for (int i = 0; i < padding; ++i) {
+            paddedBitString += '0';
         }
-        bitStringLength=paddedBitString.length(); 
-        bitString=paddedBitString; 
     }
-    size_t charCount =bitStringLength/8;
-    vector<char> result( charCount );
 
+    size_t charCount = paddedBitString.length() / 8;
+    vector<char> result(charCount);
 
-    for (size_t i=0; i<charCount; ++i) 
-    {
+    for (size_t i = 0; i < charCount; ++i) {
         unsigned char byte = 0;
-        for (int j=0; j<8; ++j) 
-        {
-            if (bitString[i*8+j]=='1') 
-            {
-                byte|=(1 << (7 - j)); 
+        for (int j = 0; j < 8; ++j) {
+            if (paddedBitString[i * 8 + j] == '1') {
+                byte |= (1 << (7 - j));
             }
         }
-        result[i]=static_cast<char>(byte);
+        result[i] = static_cast<char>(byte);
     }
+
     return result;
 }
-    
+
+
+vector<char> decoder(Node *root, string bin, int len) {
+    vector<char> newstring;
+    Node* current = root; // Используем отдельную переменную для обхода дерева
+
+    for (int i = 0; i < len; i++) {
+        if (current == nullptr) { 
+            cerr << "Ошибка: Достигнут NULL-указатель в дереве!" << endl;
+            break; // Или return newstring;
+        }
+        if (!current->left && !current->right) {
+            newstring.push_back(current->symb);
+            current = root; // Возвращаемся к корню после нахождения символа
+            i-=1;
+            continue;
+        }
+
+        if (bin[i] == '0') {
+            current = current->left;
+        } else if (bin[i] == '1') {
+            current = current->right;
+        } 
+    }
+    return newstring;
+}
