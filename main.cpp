@@ -56,15 +56,57 @@ int main()
     
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding); 
-    ofstream outputFile("encoded.bin", ios::binary);
+    ofstream outputFile("encoded.txt", ios::out);
    
     outputFile.write(reinterpret_cast<char*>(&padding), sizeof(int));
     outputFile.write(reinterpret_cast<char*>(&length), sizeof(long));
     // Записываем закодированные данные
     outputFile.write(charArray.data(), charArray.size());    
-    std::cout<<" text zakodirovan "<<std::endl;
+    cout<<" text zakodirovan "<<endl;
 
     outputFile.close();
+
+    // переводим то что в .bin файле обратно в двоичный код
+    ifstream fnew("encoded.txt", ios::out);
+    if (!fnew.is_open())
+    {
+        return -1;  
+    }
+    fnew.seekg (0, ios::end);
+    long int encodedLenght = fnew.tellg();
+    fnew.seekg (0, ios::beg);
+    string againBinary = "";
+    for (int i = 0; i < encodedLenght; ++i)
+    {
+        bitset<8>bina((char)fnew.get());
+        againBinary+=bina.to_string<char, char_traits<char>, allocator<char> >();
+        
+    }
+    cout << againBinary; // строка с двоичным кодом
+    fnew.close();
+
+    vector<char> newstring;
+    Node mainRoot = root;
+    cout << "df" << encodeText.length() << endl;
+    for(int i = 0; i < encodeText.length(); i++) {
+        if(!root.left && !root.right) {
+            newstring.push_back(root.symb);
+            root = mainRoot;
+            continue;
+        }
+        if(encodeText[i] == '0') {
+            // cout << "ityt";
+
+            root = *root.left;
+        }
+        else if(encodeText[i] == '1') {
+            // cout << "imhere";
+            root = *root.right;
+        }
+    }
+    for(int i = 0; i < newstring.size(); i++) {
+        cout << newstring[i];
+    }
 
     return 0;
 
