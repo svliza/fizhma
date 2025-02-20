@@ -1,10 +1,14 @@
+#include "func.cpp" 
 #include <iostream>
 #include <fstream>
-#include "func.cpp" 
+#include "func.h"
 #include <string>
 #include <list>
 #include <vector>
 #include <unordered_map>
+#include <bitset>
+#include <sstream> 
+
 #define SIZE 256
 
 using namespace std;
@@ -26,7 +30,6 @@ int main()
     {
         freq[(unsigned char)fs.get()] ++;
     }
-    
 
     // Создаем список с символами
     list<Node*> tree;
@@ -38,12 +41,11 @@ int main()
 
     // Создаем дерево
     makeTree(tree);
-    Node root = *tree.front();
+    Node root = *tree.front(); 
 
     // Сжатие файла
     unordered_map<char, string> huffmanCode; //хэш-таблица кодов
     encode(&root, "", huffmanCode);
-    
     fs.seekg(0, ios::beg); 
     string encodeText="";
     for (int i = 0; i < length; ++i)
@@ -52,20 +54,22 @@ int main()
         encodeText+=huffmanCode[ch];
     }
     fs.close();
-    long int finalLenght = encodeText.length(); 
-    
+
+    long int finalLenght = encodeText.length();
+
     int padding = 0;
-    vector<char> charArray = bitsToChars(encodeText, padding); 
+    vector<char> charArray = bitsToChars(encodeText, padding);
+
     ofstream outputFile("encoded.txt", ios::out);
-   
-    outputFile.write(reinterpret_cast<char*>(&padding), sizeof(int));
-    outputFile.write(reinterpret_cast<char*>(&length), sizeof(long));
+    if (!outputFile.is_open()) {
+        return -1;
+    }
     // Записываем закодированные данные
-    outputFile.write(charArray.data(), charArray.size());    
-    cout<<" text zakodirovan "<<endl;
-
+    for (char c : charArray) {
+        outputFile << c;
+    }
+    cout << "text zakodirovan" << endl;
     outputFile.close();
-
 
     // переводим то что в .bin файле обратно в двоичный код
     ifstream fnew("encoded.txt", ios::binary);
@@ -83,12 +87,9 @@ int main()
         againBinary+=bina.to_string<char, char_traits<char>, allocator<char> >();
         
     }
-    cout << againBinary << endl;
-
     fnew.close();
 
-
-
+    // декодирование
     vector<char> decodedText = decoder(&root, againBinary, finalLenght);
     for(int i = 0; i < decodedText.size(); i++) {
         cout << decodedText[i];
@@ -97,6 +98,6 @@ int main()
     ofstream decodedFile("new.txt", ios::binary);
     decodedFile.write(decodedText.data(), decodedText.size()); 
     decodedFile.close();
-    return 0;
 
+    return 0;
 }
