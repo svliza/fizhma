@@ -15,7 +15,7 @@ using namespace std;
 int main()
 {
     // Считываем символы в массив
-    ifstream fs("file.txt", ios::binary);
+    ifstream fs("1mb-exemplefile-com.txt", ios::binary);
     if (!fs.is_open())  
     {
         return -1;  
