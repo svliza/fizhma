@@ -1,7 +1,6 @@
 #include "func.cpp" 
 #include <iostream>
 #include <fstream>
-#include "func.cpp"
 #include <string>
 #include <list>
 #include <vector>
@@ -17,8 +16,8 @@ using namespace std;
 int main()
 {
     // Считываем символы в массив
-    ifstream fs("file.txt", ios::binary);
-    if (!fs.is_open())
+    ifstream fs("cat.bmp", ios::binary);
+    if (!fs.is_open())  
     {
         return -1;  
     }
@@ -39,7 +38,7 @@ int main()
         Node* p = new Node((unsigned char)i, freq[i]);
         tree.push_back(p);
     }
-
+    
     // Создаем дерево
     makeTree(tree);
     Node root = *tree.front(); 
@@ -47,6 +46,9 @@ int main()
     // Сжатие файла
     unordered_map<char, string> huffmanCode; //хэш-таблица кодов
     encode(&root, "", huffmanCode);
+
+  
+
     fs.seekg(0, ios::beg); 
     string encodeText="";
     for (int i = 0; i < length; ++i)
@@ -55,11 +57,14 @@ int main()
         encodeText+=huffmanCode[ch];
     }
     fs.close();
-
+    // cout << "Coded string: " << encodeText << endl;
+    
     long int finalLenght = encodeText.length();
+    cout << finalLenght;
 
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding);
+    
 
     ofstream outputFile("encoded.txt", ios::out);
     if (!outputFile.is_open()) {
@@ -92,11 +97,7 @@ int main()
 
     // декодирование
     vector<char> decodedText = decoder(&root, againBinary, finalLenght);
-    for(int i = 0; i < decodedText.size(); i++) {
-        cout << decodedText[i];
-    }
-
-    ofstream decodedFile("new.txt", ios::binary);
+    ofstream decodedFile("new.bmp", ios::binary);
     decodedFile.write(decodedText.data(), decodedText.size()); 
     decodedFile.close();
 

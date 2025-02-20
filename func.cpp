@@ -1,10 +1,14 @@
 #include "func.h"
 #include <iostream>
-#include <list>
-#include <unordered_map>
+#include <fstream>
+// #include "func.cpp"
 #include <string>
+#include <list>
 #include <vector>
+#include <unordered_map>
 #include <bitset>
+#include <sstream> 
+
 using namespace std;
 
 Node::Node():left(nullptr), right(nullptr) {}
