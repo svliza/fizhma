@@ -14,7 +14,7 @@ using namespace std;
 int main()
 {
     // Считываем символы в массив
-    ifstream fs("cat.bmp", ios::binary);
+    ifstream fs("music.wav", ios::binary);
     if (!fs.is_open())
     {
         return -1;  
@@ -58,7 +58,7 @@ int main()
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding);
 
-    ofstream outputFile("encoded_cat.bmp", ios::binary);
+    ofstream outputFile("encoded.txt", ios::binary);
     if (!outputFile.is_open()) {
         return -1;
     }
@@ -69,7 +69,7 @@ int main()
     outputFile.close();
 
     // переводим то, что в .bin файле, обратно в двоичный код
-    ifstream fnew("encoded_cat.bmp", ios::binary);
+    ifstream fnew("encoded.txt", ios::binary);
     if (!fnew.is_open())
     {
         return -1;  
@@ -89,7 +89,7 @@ int main()
     // декодирование
     vector<char> decodedText = decoder(&root, againBinary, finalLenght);
 
-    ofstream decodedFile("new_cat.bmp", ios::binary);
+    ofstream decodedFile("new.wav", ios::binary);
     decodedFile.write(decodedText.data(), decodedText.size()); 
     decodedFile.close();
 
