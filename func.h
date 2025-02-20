@@ -1,8 +1,8 @@
-#include <list>
 #pragma once
 #include <list>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #define CODE_SIZE 8
 
@@ -26,3 +26,7 @@ bool sortTree(const Node *first, const Node *second);
 void makeTree(std::list<Node*>& myTree);
 
 void encode(Node* root, std::string str, std::unordered_map<unsigned char, std::string>& huffmanCode);
+
+// vector<char> bitsToChars(string& bitString, int& padding);
+
+// vector<char> decoder(Node *root, string bin);

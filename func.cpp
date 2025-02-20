@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <bitset>
 
 using namespace std;
 
@@ -86,3 +87,21 @@ vector<char> bitsToChars(string& bitString, int& padding)
     return result;
 }
     
+vector<char> decoder(Node *root, string bin) {
+    vector<char> newstring;
+    Node* mainRoot = root;
+    for(int i = 0; i < bin.length(); i++) {
+        if(!root->left && !root->right) {
+            newstring.push_back(root->symb);
+            root = mainRoot;
+            continue;
+        }
+        if(bin[i] = '0') {
+            root = root->left;
+        }
+        else {
+            root = root->right;
+        }
+    }
+    return newstring;
+}
