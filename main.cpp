@@ -1,13 +1,11 @@
-#include "func.cpp" 
 #include <iostream>
+#include "func.cpp" 
 #include <fstream>
-#include "func.h"
 #include <string>
 #include <list>
 #include <vector>
 #include <unordered_map>
 #include <bitset>
-#include <sstream> 
 
 #define SIZE 256
 
@@ -16,7 +14,7 @@ using namespace std;
 int main()
 {
     // Считываем символы в массив
-    ifstream fs("file.txt", ios::binary);
+    ifstream fs("cat.bmp", ios::binary);
     if (!fs.is_open())
     {
         return -1;  
@@ -55,12 +53,12 @@ int main()
     }
     fs.close();
 
-    long int finalLenght = encodeText.length();
+    long int finalLenght = encodeText.size();
 
     int padding = 0;
     vector<char> charArray = bitsToChars(encodeText, padding);
 
-    ofstream outputFile("encoded.txt", ios::out);
+    ofstream outputFile("encoded_cat.bmp", ios::binary);
     if (!outputFile.is_open()) {
         return -1;
     }
@@ -68,11 +66,10 @@ int main()
     for (char c : charArray) {
         outputFile << c;
     }
-    cout << "text zakodirovan" << endl;
     outputFile.close();
 
-    // переводим то что в .bin файле обратно в двоичный код
-    ifstream fnew("encoded.txt", ios::binary);
+    // переводим то, что в .bin файле, обратно в двоичный код
+    ifstream fnew("encoded_cat.bmp", ios::binary);
     if (!fnew.is_open())
     {
         return -1;  
@@ -91,11 +88,8 @@ int main()
 
     // декодирование
     vector<char> decodedText = decoder(&root, againBinary, finalLenght);
-    for(int i = 0; i < decodedText.size(); i++) {
-        cout << decodedText[i];
-    }
 
-    ofstream decodedFile("new.txt", ios::binary);
+    ofstream decodedFile("new_cat.bmp", ios::binary);
     decodedFile.write(decodedText.data(), decodedText.size()); 
     decodedFile.close();
 

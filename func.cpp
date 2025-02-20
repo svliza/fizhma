@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <bitset>
-#include <bitset>
 using namespace std;
 
 Node::Node():left(nullptr), right(nullptr) {}
